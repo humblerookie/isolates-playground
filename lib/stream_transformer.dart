@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:isolate';
 import 'dart:typed_data';
 
@@ -93,16 +94,11 @@ class IoTransformer<S, T> implements StreamTransformer<S, T> {
   }
 
   static LoadBalancer _loadBalancer;
-  static const int POOL_SIZE = 20;
+  static const int POOL_SIZE = 6;
 
   static Future<void> initLoadbalancer() async {
     if (_loadBalancer == null) {
-      var stopWatch = Stopwatch();
-      stopWatch.start();
       _loadBalancer = await LoadBalancer.create(POOL_SIZE, IsolateRunner.spawn);
-      print(
-          "Elapsed time for $POOL_SIZE is ${stopWatch.elapsedMicroseconds}μs");
-      stopWatch.stop();
     }
   }
 }

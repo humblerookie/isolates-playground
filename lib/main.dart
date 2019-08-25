@@ -48,9 +48,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   int _other= 0;
+  int input=20;
 
   void _incrementCounter() {
-   profileService.getUserSlug().listen((onData){
+   profileService.getUserSlug(input++).listen((onData){
      setState(() {
        _counter = onData;
      });

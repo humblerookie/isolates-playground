@@ -1,19 +1,20 @@
 import 'dart:isolate';
-import 'dart:isolate' as prefix0;
+
+import 'package:rxdart/rxdart.dart';
 
 Future<int> startIsolate(int a) async {
-  ReceivePort receivePort =
-      ReceivePort(); //port for this main isolate to receive messages.
-  prefix0.Isolate isolate = await Isolate.spawn(
+  ReceivePort receivePort = ReceivePort(); //port for this main isolate to receive messages.
+  Isolate isolate = await Isolate.spawn(
       isolateTask, Pair(a, receivePort.sendPort),
       errorsAreFatal: true, paused: true);
-  isolate.resume(isolate.pauseCapability);
   return await receivePort.first;
 }
 
 void isolateTask(Pair<int, SendPort> pair) {
   var value = calculateFib(pair.first);
   pair.second.send(value);
+
+  Observable.fromFuture(startIsolate(100));
 }
 
 class Pair<F, S> {

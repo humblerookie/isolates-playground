@@ -4,9 +4,9 @@ import 'package:rxdart/rxdart.dart';
 import 'isolate_module.dart';
 
 class ProfileService {
-  Observable getUserSlug() {
-    return Observable.just(getInt())
-        .transform(IoTransformer<int, int>(calculateFibN));
+  Observable getUserSlug(int input) {
+    return Observable.just(input)
+        .transform(IoTransformer<int, int>(calculateFib));
   }
 
   Future<int> getIsolateData() async {
