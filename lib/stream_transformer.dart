@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
-import 'dart:isolate';
-import 'dart:typed_data';
 
 import 'package:isolate/isolate_runner.dart';
 import 'package:isolate/load_balancer.dart';
 
-class IoTransformer<S, T> implements StreamTransformer<S, T> {
+class IoScheduler<S, T> implements StreamTransformer<S, T> {
   StreamController _controller;
 
   StreamSubscription _subscription;
@@ -21,7 +18,7 @@ class IoTransformer<S, T> implements StreamTransformer<S, T> {
   // Original Stream
   Stream<S> _stream;
 
-  IoTransformer(S transform(T value), {bool sync: false, this.cancelOnError}) {
+  IoScheduler(S transform(T value), {bool sync: false, this.cancelOnError}) {
     _transformer = transform;
     _controller = new StreamController<T>(
         onListen: _onListen,
@@ -35,7 +32,7 @@ class IoTransformer<S, T> implements StreamTransformer<S, T> {
         sync: sync);
   }
 
-  IoTransformer.broadcast({bool sync: false, bool this.cancelOnError}) {
+  IoScheduler.broadcast({bool sync: false, bool this.cancelOnError}) {
     _controller = new StreamController<T>.broadcast(
         onListen: _onListen, onCancel: _onCancel, sync: sync);
   }

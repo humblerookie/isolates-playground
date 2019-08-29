@@ -51,11 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int input=20;
 
   void _incrementCounter() {
-   profileService.getUserSlug(input++).listen((onData){
-     setState(() {
-       _counter = onData;
-     });
-   });
+    profileService.getOtherIsolate().then((value){
+
+      print("New isolate");
+    });
   }
 
   void _incrementOtherStuff() {
