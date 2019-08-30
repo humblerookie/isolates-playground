@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isolate_playground/service.dart';
 
 void main() => runApp(MyApp());
 
@@ -47,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
+    service.subject.listen((onData) {});
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
